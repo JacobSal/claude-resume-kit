@@ -1,0 +1,22 @@
+{
+  "name": "claude-resume-kit",
+  "version": "1.0.0",
+  "description": "Generate strictly typed resumes, cvs, and cover letters with the power of LLMs. The resume_builder module provides a structured schema and generation tools, while the latex_server compiles LaTeX templates for polished output.",
+  "author": {
+    "name": "JacobSal",
+    "url": "https://github.com/JacobSal"
+  },
+  "homepage": "https://github.com/JacobSal/claude-resume-kit",
+  "repository": "https://github.com/JacobSal/claude-resume-kit",
+  "license": "MIT",
+  "keywords": [
+    "resume",
+    "autonomous-writing",
+    "typed-schema",
+    "latex",
+    "quality-gate",
+    "personalized",
+    "plugin"
+  ],
+  "skills": ["./skills"]
+}
