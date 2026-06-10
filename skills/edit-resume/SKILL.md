@@ -16,6 +16,17 @@ If only .tex path and no instructions: ask the user what to fix.
 
 ---
 
+## 0. Resume Kit Root — READ FIRST (plugin bootstrap)
+
+Before anything else, establish where the working files live and load the hard rules:
+
+1. **Find the root.** Read `_resume_kit_files/.schema/root.json` and let **RESUME_KIT_ROOT** = its `root` value. If the pointer is missing, fall back to `_resume_kit_files/` (relative to the project root) and warn: "root.json missing — using default _resume_kit_files/. Re-run setup-resume-kit.ps1."
+2. **Resolve every path under the root.** Every relative path named in this skill — `config.md`, `kit_state.md`, `resume_builder/...`, `knowledge_base/...`, `output/...`, `JDs/...` — resolves under RESUME_KIT_ROOT. Example: `config.md` -> `<RESUME_KIT_ROOT>/config.md`; `resume_builder/helpers/char_count.py` -> `<RESUME_KIT_ROOT>/resume_builder/helpers/char_count.py`.
+3. **Load the hard rules NOW.** Read `<RESUME_KIT_ROOT>/resume_builder/reference/core_rules.md` — anti-fabrication, verb discipline, provenance, generation rules, and LaTeX notation. These are MANDATORY and override convenience.
+4. **State file, not CLAUDE.md.** Wherever this skill says "Read `CLAUDE.md`" for **Active Sessions** or **KB Corrections**, read `<RESUME_KIT_ROOT>/kit_state.md` instead. In plugin mode the submodule `CLAUDE.md` is not auto-loaded; `kit_state.md` is the working-copy state file.
+
+---
+
 ## Safety Rules (ALWAYS ENFORCED)
 
 **Accuracy > Relevance > Impact > ATS > Brevity**
@@ -48,7 +59,7 @@ If the user provides feedback, corrections, or suggestions at any point:
 ## Startup
 
 Read `resume_builder/reference/shared_ops.md` — Fresh Session Startup + Session File Derivation.
-Read `CLAUDE.md` — check Active Sessions and KB Corrections.
+Read `kit_state.md` — check Active Sessions and KB Corrections.
 Read `config.md` — load Provenance Flags, email, FIXED Sections, document preferences.
 Find and read the session file (use derivation protocol from shared_ops.md).
 

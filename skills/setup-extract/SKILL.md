@@ -14,9 +14,20 @@ Parse `$ARGUMENTS`:
 
 ---
 
+## 0. Resume Kit Root — READ FIRST (plugin bootstrap)
+
+Before anything else, establish where the working files live and load the hard rules:
+
+1. **Find the root.** Read `_resume_kit_files/.schema/root.json` and let **RESUME_KIT_ROOT** = its `root` value. If the pointer is missing, fall back to `_resume_kit_files/` (relative to the project root) and warn: "root.json missing — using default _resume_kit_files/. Re-run setup-resume-kit.ps1."
+2. **Resolve every path under the root.** Every relative path named in this skill — `config.md`, `kit_state.md`, `resume_builder/...`, `knowledge_base/...`, `output/...`, `JDs/...` — resolves under RESUME_KIT_ROOT. Example: `config.md` -> `<RESUME_KIT_ROOT>/config.md`; `knowledge_base/extractions/_INVENTORY.md` -> `<RESUME_KIT_ROOT>/knowledge_base/extractions/_INVENTORY.md`.
+3. **Load the hard rules NOW.** Read `<RESUME_KIT_ROOT>/resume_builder/reference/core_rules.md` — anti-fabrication, verb discipline, provenance, generation rules, and LaTeX notation. These are MANDATORY and override convenience.
+4. **State file, not CLAUDE.md.** Wherever this skill says "Read `CLAUDE.md`" for **Active Sessions** or **KB Corrections**, read `<RESUME_KIT_ROOT>/kit_state.md` instead. In plugin mode the submodule `CLAUDE.md` is not auto-loaded; `kit_state.md` is the working-copy state file.
+
+---
+
 ## Startup
 
-1. Read `CLAUDE.md` — check KB Corrections Log for known issues
+1. Read `kit_state.md` — check KB Corrections Log for known issues
 2. Read `config.md` — load Personal Info (to identify user's author position), Provenance Flags
 3. Read `knowledge_base/extractions/_INVENTORY.md` — see what's already extracted, avoid duplicates
 

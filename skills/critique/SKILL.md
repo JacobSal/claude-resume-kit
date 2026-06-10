@@ -16,6 +16,17 @@ If no CL .tex provided or found in session file, critique resume/CV alone (Part 
 
 ---
 
+## 0. Resume Kit Root — READ FIRST (plugin bootstrap)
+
+Before anything else, establish where the working files live and load the hard rules:
+
+1. **Find the root.** Read `_resume_kit_files/.schema/root.json` and let **RESUME_KIT_ROOT** = its `root` value. If the pointer is missing, fall back to `_resume_kit_files/` (relative to the project root) and warn: "root.json missing — using default _resume_kit_files/. Re-run setup-resume-kit.ps1."
+2. **Resolve every path under the root.** Every relative path named in this skill — `config.md`, `kit_state.md`, `resume_builder/...`, `knowledge_base/...`, `output/...`, `JDs/...` — resolves under RESUME_KIT_ROOT. Example: `config.md` -> `<RESUME_KIT_ROOT>/config.md`; `resume_builder/helpers/char_count.py` -> `<RESUME_KIT_ROOT>/resume_builder/helpers/char_count.py`.
+3. **Load the hard rules NOW.** Read `<RESUME_KIT_ROOT>/resume_builder/reference/core_rules.md` — anti-fabrication, verb discipline, provenance, generation rules, and LaTeX notation. These are MANDATORY and override convenience.
+4. **State file, not CLAUDE.md.** Wherever this skill says "Read `CLAUDE.md`" for **Active Sessions** or **KB Corrections**, read `<RESUME_KIT_ROOT>/kit_state.md` instead. In plugin mode the submodule `CLAUDE.md` is not auto-loaded; `kit_state.md` is the working-copy state file.
+
+---
+
 ## Safety Rules
 
 **Accuracy > Relevance > Impact > ATS > Brevity**
@@ -39,7 +50,7 @@ If the user provides feedback, corrections, or suggestions at any point:
 ## Startup
 
 Read `resume_builder/reference/shared_ops.md` — Fresh Session Startup + Session File Derivation.
-Read `CLAUDE.md` — check Active Sessions and KB Corrections.
+Read `kit_state.md` — check Active Sessions and KB Corrections.
 Read `config.md` — load Provenance Flags, FIXED Sections, email.
 Find and read the session file for the .tex being critiqued (use derivation protocol from shared_ops.md).
 
@@ -58,7 +69,7 @@ Find and read the session file for the .tex being critiqued (use derivation prot
    - **Framing Strategy** → intentional reframing decisions (flag only execution inconsistencies, not the strategy itself)
    - **Cover Letter Plan** → CL structure rationale
    - **Critique Context** → reviewer persona, competitive landscape, domain vocabulary
-   - If session file lacks Company Context or Critique Context: do 1-2 web searches to fill gaps
+   - If session file lacks Company Context or Critique Context: do 1-2 **Firecrawl** `firecrawl_search` searches (not the built-in WebSearch — see core_rules.md "Web Search Tool") to fill gaps
 2. Read `resume_builder/reference/critique_framework.md`
 3. Read `resume_builder/support/ai_fingerprint_rules.md` — use Section 6 checklist in Part 7 verification
 3. Read the .tex file(s) — derive paths from session file Output Files, or from `$ARGUMENTS`
@@ -75,7 +86,7 @@ Find and read the session file for the .tex being critiqued (use derivation prot
    Use the Read tool to view the compiled PDF — check orphans, page fill, header wrapping.
    If compile fails: note "COMPILE FAILED — visual checks could not be verified" in Part 8.
 8. If a prior critique exists (`output/<FolderName>/critique_<name>.md`): read it and note previous score.
-8b. **Paper Hook Verification:** If the CL cites named papers, PIs, programs, or publications, web-search to verify title, journal, year, and PI affiliation. Flag factual errors as Tier 1 fixes.
+8b. **Paper Hook Verification:** If the CL cites named papers, PIs, programs, or publications, use **Firecrawl** `firecrawl_search` (not the built-in WebSearch — see core_rules.md "Web Search Tool") to verify title, journal, year, and PI affiliation. Flag factual errors as Tier 1 fixes.
 
 9. **Run the full critique per critique_framework.md. The output MUST contain ALL 8 sections** (even if the framework file has partially compacted, produce every section):
 

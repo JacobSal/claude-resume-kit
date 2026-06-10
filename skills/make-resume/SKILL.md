@@ -16,6 +16,17 @@ Parse `$ARGUMENTS`:
 
 ---
 
+## 0. Resume Kit Root — READ FIRST (plugin bootstrap)
+
+Before anything else, establish where the working files live and load the hard rules:
+
+1. **Find the root.** Read `_resume_kit_files/.schema/root.json` and let **RESUME_KIT_ROOT** = its `root` value. If the pointer is missing, fall back to `_resume_kit_files/` (relative to the project root) and warn: "root.json missing — using default _resume_kit_files/. Re-run setup-resume-kit.ps1."
+2. **Resolve every path under the root.** Every relative path named in this skill — `config.md`, `kit_state.md`, `resume_builder/...`, `knowledge_base/...`, `output/...`, `JDs/...` — resolves under RESUME_KIT_ROOT. Example: `config.md` -> `<RESUME_KIT_ROOT>/config.md`; `resume_builder/helpers/char_count.py` -> `<RESUME_KIT_ROOT>/resume_builder/helpers/char_count.py`.
+3. **Load the hard rules NOW.** Read `<RESUME_KIT_ROOT>/resume_builder/reference/core_rules.md` — anti-fabrication, verb discipline, provenance, generation rules, and LaTeX notation. These are MANDATORY and override convenience.
+4. **State file, not CLAUDE.md.** Wherever this skill says "Read `CLAUDE.md`" for **Active Sessions** or **KB Corrections**, read `<RESUME_KIT_ROOT>/kit_state.md` instead. In plugin mode the submodule `CLAUDE.md` is not auto-loaded; `kit_state.md` is the working-copy state file.
+
+---
+
 ## Safety Rules (ALWAYS ENFORCED)
 
 **Accuracy > Relevance > Impact > ATS > Brevity**
@@ -45,7 +56,7 @@ If the user provides feedback, corrections, or suggestions at any point:
 Read `resume_builder/reference/shared_ops.md` for session startup, file derivation, and organization protocols.
 
 Then:
-1. Read `CLAUDE.md` — check Active Sessions and KB Corrections
+1. Read `kit_state.md` — check Active Sessions and KB Corrections
 2. Read `config.md` — load Provenance Flags, email, document preferences, role types
 3. If session file exists for this JD:
    - Read session file, check Status
@@ -78,7 +89,7 @@ Defaults:
 2. `resume_builder/reference/resume_reference.md` — Budget Card, Section Specs, Char Limits, Page Budgets
 3. `config.md` — Role-Type Decision Tree to identify the matching bundle
 
-**Web Search (MANDATORY — 2-3 searches).** Load WebSearch via ToolSearch first.
+**Web Search (MANDATORY — 2-3 searches).** Use **Firecrawl** `firecrawl_search` (see core_rules.md "Web Search Tool"). Load it via ToolSearch first: `select:mcp__firecrawl__firecrawl_search`. Do NOT use the built-in WebSearch unless Firecrawl is unavailable.
 1. `[Company] research & development [key JD domain]` — products, recent projects
 2. `[Company] [specific technology from JD]` — concrete hooks for cover letter
 3. `[Company] careers [role type] culture` OR recent news — hiring context
@@ -102,7 +113,7 @@ All subsequent output files go in this folder.
 
 **Verify completeness:** Re-read the session file. Confirm these 8 sections are non-empty: JD Info, Requirements table, ATS Keywords, Gap Assessment, Company Context, Framing Strategy, Critique Context, Cover Letter Plan. Fill any missing section before presenting.
 
-**Write memory pointer** to `CLAUDE.md` Active Sessions.
+**Write memory pointer** to `kit_state.md` Active Sessions.
 
 **Update session file Status:** `Phase 0: DONE`
 

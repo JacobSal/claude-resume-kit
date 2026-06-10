@@ -46,7 +46,7 @@ Only modify VARIABLE sections: Summary, Technical Skills, Experience bullets/hea
 
 ## Provenance Flags
 
-See `CLAUDE.md` for your project-specific provenance flags. Common patterns:
+See `config.md` for your project-specific provenance flags. Common patterns:
 
 | Item Status | Rule |
 |-------------|------|
@@ -69,7 +69,7 @@ CRITICAL: ~ in LaTeX = non-breaking space. Use $\sim$ for "approximately."
 
 ## KB Corrections
 
-See `CLAUDE.md` for your project-specific KB corrections log. Always check before generation to avoid re-introducing known errors.
+See `kit_state.md` for your project-specific KB corrections log. Always check before generation to avoid re-introducing known errors.
 
 ## Budget Reminder
 

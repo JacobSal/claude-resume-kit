@@ -10,7 +10,18 @@ user-invocable: true
 Parse `$ARGUMENTS`:
 - Session file path (e.g., `output/Acme/session_acme_engineer.md`) → read that session file
 - Session name (e.g., `acme_engineer`) → find session file via shared_ops.md derivation
-- Empty → check `CLAUDE.md` Active Sessions for latest
+- Empty → check `kit_state.md` Active Sessions for latest
+
+---
+
+## 0. Resume Kit Root — READ FIRST (plugin bootstrap)
+
+Before anything else, establish where the working files live and load the hard rules:
+
+1. **Find the root.** Read `_resume_kit_files/.schema/root.json` and let **RESUME_KIT_ROOT** = its `root` value. If the pointer is missing, fall back to `_resume_kit_files/` (relative to the project root) and warn: "root.json missing — using default _resume_kit_files/. Re-run setup-resume-kit.ps1."
+2. **Resolve every path under the root.** Every relative path named in this skill — `config.md`, `kit_state.md`, `resume_builder/...`, `knowledge_base/...`, `output/...`, `JDs/...` — resolves under RESUME_KIT_ROOT. Example: `config.md` -> `<RESUME_KIT_ROOT>/config.md`; `resume_builder/helpers/char_count.py` -> `<RESUME_KIT_ROOT>/resume_builder/helpers/char_count.py`.
+3. **Load the hard rules NOW.** Read `<RESUME_KIT_ROOT>/resume_builder/reference/core_rules.md` — anti-fabrication, verb discipline, provenance, generation rules, and LaTeX notation. These are MANDATORY and override convenience.
+4. **State file, not CLAUDE.md.** Wherever this skill says "Read `CLAUDE.md`" for **Active Sessions** or **KB Corrections**, read `<RESUME_KIT_ROOT>/kit_state.md` instead. In plugin mode the submodule `CLAUDE.md` is not auto-loaded; `kit_state.md` is the working-copy state file.
 
 ---
 
@@ -41,7 +52,7 @@ If the user provides feedback, corrections, or suggestions at any point:
 Read `resume_builder/reference/shared_ops.md` for session startup and file derivation.
 
 Then:
-1. Read `CLAUDE.md` — check Active Sessions and KB Corrections
+1. Read `kit_state.md` — check Active Sessions and KB Corrections
 2. Read `config.md` — load Provenance Flags, email, role types
 3. Find and read the session file
 4. **Recovery check:**
@@ -90,7 +101,7 @@ Progress: "Writing [institution type] cover letter — [N] paragraphs, targeting
 
 ### CL Hook Verification Gate (MANDATORY before presenting to user)
 
-Web-search every hook used in the CL:
+Use **Firecrawl** `firecrawl_search` (load via ToolSearch `select:mcp__firecrawl__firecrawl_search`; not the built-in WebSearch — see core_rules.md "Web Search Tool") to verify every hook used in the CL:
 - Academic: PI name + cited paper/research area
 - National Lab: named program, thrust area, or group publication
 - Industry: product, technology, or company news referenced

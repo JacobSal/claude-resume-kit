@@ -29,10 +29,14 @@ If edits needed after critique:
 
 ## Fresh Session Startup
 
-CLAUDE.md is auto-loaded. These files are NOT — read them at skill start:
-1. `CLAUDE.md` — check Active Sessions and KB Corrections Log
-2. If resuming work on an existing JD: read its session file and pick up at Status → Next
-3. If starting a new JD: proceed to Phase 0
+> Paths here resolve under **RESUME_KIT_ROOT** (see each SKILL.md "Resume Kit Root"
+> bootstrap). In plugin mode NOTHING here is auto-loaded — read each file explicitly.
+
+Read at skill start:
+1. `resume_builder/reference/core_rules.md` — MANDATORY hard rules (already loaded in the bootstrap; re-confirm if compacted)
+2. `kit_state.md` — check Active Sessions and KB Corrections Log (this is the working-copy state file; the submodule `CLAUDE.md` is NOT auto-loaded in plugin mode)
+3. If resuming work on an existing JD: read its session file and pick up at Status -> Next
+4. If starting a new JD: proceed to Phase 0
 
 ---
 
@@ -62,7 +66,7 @@ Example: `output/Acme/e2e_acme_engineer_resume.tex` → `acme_engineer` → look
 1. Direct path from $ARGUMENTS
 2. Folder path: `output/<FolderName>/session_<name>.md` (derive FolderName from JD filename or session name)
 3. Flat `output/` (legacy): `output/session_<name>.md`
-4. `CLAUDE.md` Active Sessions pointer
+4. `kit_state.md` Active Sessions pointer
 5. Glob: `output/**/session_*<company>*.md`
 
 **If still not found:**
@@ -124,5 +128,5 @@ The tool is authoritative — never trust mental math for char counts. If the to
 Before the session ends or user does `/clear`:
 
 1. **Update session file Status** — reflects actual state (which phase completed, what's next)
-2. **Update memory pointer** in `CLAUDE.md` Active Sessions
+2. **Update memory pointer** in `kit_state.md` Active Sessions
 3. **If mid-phase:** Write a `## Resume Point` section to the session file noting exactly where you stopped and what remains
