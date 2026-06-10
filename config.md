@@ -36,10 +36,12 @@ Track the publication status of your work. Skills check this table before every 
 
 | Item | Status | Correct Framing |
 |------|--------|----------------|
-| _Example: My Nature paper_ | _under review_ | _"under review at Nature" — never say "published in Nature"_ |
-| _Example: Internal tool_ | _unpublished_ | _"infrastructure I developed" — never imply peer-reviewed_ |
-
-Add your own rows. Delete the examples.
+| Salminen2026 (Interstride EEG) | Published | IEEE TNSRE 34:952-965 (2026). Interpretation: aging affects peripheral neuromuscular factors (not cortical constraints). |
+| Salminen2025 (Speed-dependent EEG) | Published | Journal of Neurophysiology 133(6):1761-1794 (2025). Analysis: 7 brain regions examined. |
+| DeVol2026 (Aperiodic EEG + BART) | Published | IEEE TNSRE 34:2516-2529 (2026). User role: EEG preprocessing, methods development (not direct ML implementation). |
+| Pliner2026 (CRUNCH model) | In-press | PLOS Aging and Health (2026). User role: EEG data analysis. Framing: age differences in cortical recruitment patterns. |
+| Liu2025 (Visual compensation) | Published | Imaging Neuroscience 3:IMAG.a.1039 (2025). |
+| Liu2024 (Parametric terrain) | Published | Imaging Neuroscience 2:1-33 (2024). |
 
 ---
 
@@ -49,7 +51,16 @@ Verified errors to never re-introduce. Add entries as you catch mistakes.
 
 | Correction | Details |
 |-----------|---------|
-| _Example: Tool X name_ | _It's "ToolX-v2" not "ToolX". Always use the correct name._ |
+| XSEDE/HiperGator reference | Do NOT include XSEDE in CV/resume — user does not have direct experience with XSEDE. Use generic "High-Performance Computing" or "HPC" instead. |
+| Salminen2026 interpretation | Paper finding (lower EEG variability + higher biomechanical variability in older adults) indicates aging affects PERIPHERAL NEUROMUSCULAR factors, not cortical constraints. Always cite the Conclusions section of papers for accurate interpretation. |
+| Salminen2025 brain regions | Analysis covered 7 brain regions, NOT 8+. Correct count: sensorimotor, prefrontal, parietal, occipital (4 main + 3 others = 7 total). |
+| DeVol2026 author role | User assisted with EEG preprocessing, methods development, and artifact removal — NOT direct BART model application. Never claim direct implementation of the ML model; stick to "assisted with preprocessing and methods development." |
+| BART model metrics | Do NOT include R²=0.70 in resume/CV bullets — unnecessary technical detail. Do NOT include "FDR" — replace with generic "multiple comparison correction." |
+| Clinical statistics phrasing | Use "clinical statistics and mobility assessment" NOT "(SPPB, mobility assessment)" — avoid parenthetical abbreviations in CV bullets. |
+| PhD GPA | Jacob's PhD GPA is exactly 3.9, NOT 3.9+ or 4.0. Always list as 3.9. |
+| Accumulated Local Effects | Do NOT include "Accumulated Local Effects (ALE)" in technical expertise — not relevant to reproducibility focus. Replace with generic "model interpretation and validation." |
+| Fused LASSO regression | MUST include fused LASSO regression in Machine Learning & Statistical Methods section. It is a key skill. |
+| Missing data handling detail | Do NOT include "(24%+)" in missing data handling bullet — this is an overly specific detail. Use generic "missing data handling" instead. |
 
 ---
 
