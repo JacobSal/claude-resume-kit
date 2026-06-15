@@ -12,6 +12,7 @@
 ├── setup-build-kb/SKILL.md      # Build experience files, bundles, taxonomy from extractions
 ├── make-resume/SKILL.md         # Phase 0-2: JD research → bullet plan → resume/CV generation
 ├── make-cl/SKILL.md             # Cover letter generation from session file
+├── make-research-statement/SKILL.md  # Academic research statement (vision, significance, open-science) from session + KB
 ├── edit-resume/SKILL.md         # Edit resume/CV from critique or user feedback
 └── critique/SKILL.md            # 8-dimension critique of full package
 
