@@ -96,6 +96,34 @@ verification) MUST go through **Firecrawl**, not the built-in cloud WebSearch:
 
 ---
 
+## Reading Source PDFs (use pdf-mcp, NOT the Read tool)
+
+Source PDFs in `knowledge_base/` (papers) and JD PDFs in `JDs/` MUST be read with the **pdf-mcp**
+MCP server, never the built-in Read tool — the Read tool truncates or fails on large papers
+(20-40 MB), which is what produced the bogus "Level 1, pages 1-3 only" extractions.
+
+**PATHS (critical):** pdf-mcp runs inside **WSL**, so it CANNOT resolve Windows paths. Passing a
+`C:\...` path returns "PDF file not found" — the silent failure that caused the fallback-to-Read bug.
+Always pass a **project-relative path** (e.g. `_resume_kit_files/knowledge_base/papers/foo.pdf`) or a
+**WSL absolute path** (`/mnt/c/Users/.../foo.pdf`). Never a `C:\` path.
+
+Protocol (load tools via ToolSearch first:
+`select:mcp__pdf-mcp__pdf_info,mcp__pdf-mcp__pdf_read_pages,mcp__pdf-mcp__pdf_search`):
+1. `pdf_info` FIRST — get page count + structure. Never assume length.
+2. `pdf_search` to locate sections (abstract, methods, results, discussion) — its excerpts are
+   cheap and often answer directly.
+3. `pdf_read_pages` in page RANGES to capture the WHOLE paper, not just front matter — e.g.
+   1-3, 4-7, 8-11, then the results/discussion pages. Do NOT stop at pages 1-3; results and
+   implications live later. Page numbers are 1-indexed.
+4. For `.tex` source: the Read tool is fine (plain text, usually richer than the PDF). If both
+   exist, prefer `.tex` for text and pdf-mcp for figures/tables.
+
+Exception: the built-in Read tool IS the correct tool for viewing a small COMPILED/RENDERED output
+PDF (visual check of a generated resume/CV/CL). pdf-mcp is for source-text extraction, not visual
+inspection.
+
+---
+
 ## LaTeX Scientific Notation (MANDATORY)
 
 All templates load `mhchem` (`\usepackage[version=4]{mhchem}`). Use these conventions:

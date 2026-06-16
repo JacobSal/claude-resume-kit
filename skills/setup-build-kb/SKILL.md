@@ -1,4 +1,5 @@
 ---
+name: setup-build-kb
 description: Synthesize completed extractions into the knowledge base files needed for resume generation
 user-invocable: true
 ---

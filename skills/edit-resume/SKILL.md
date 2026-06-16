@@ -1,4 +1,5 @@
 ---
+name: edit-resume
 description: Edit existing resume/CV or cover letter from critique feedback and user suggestions
 user-invocable: true
 ---

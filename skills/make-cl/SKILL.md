@@ -1,4 +1,5 @@
 ---
+name: make-cl
 description: Generate a tailored cover letter from an existing session file and finished resume/CV
 user-invocable: true
 ---

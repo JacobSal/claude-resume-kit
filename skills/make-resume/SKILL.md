@@ -1,4 +1,5 @@
 ---
+name: make-resume
 description: Generate a tailored resume/CV from a JD
 user-invocable: true
 ---

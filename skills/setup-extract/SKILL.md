@@ -1,4 +1,5 @@
 ---
+name: setup-extract
 description: Extract structured information from research papers, PDFs, or code into knowledge base extractions
 user-invocable: true
 ---
@@ -40,10 +41,10 @@ If the paper is already in the inventory:
 
 ## Phase 1: Read & Understand the Paper
 
-Read the paper using the appropriate method:
-- **PDF files:** Use the Read tool (supports PDF reading)
-- **.tex source:** Read directly — often has more detail than the compiled PDF
-- **If both exist:** Prefer .tex for content extraction, use PDF for figures/tables
+Read the paper using the appropriate method (see core_rules.md "Reading Source PDFs"):
+- **PDF files:** Use **pdf-mcp**, NOT the Read tool. Load via ToolSearch (`select:mcp__pdf-mcp__pdf_info,mcp__pdf-mcp__pdf_read_pages,mcp__pdf-mcp__pdf_search`). **Pass a project-relative or `/mnt/c/...` WSL path, NEVER a `C:\` path — pdf-mcp runs in WSL and a Windows path fails silently.** Run `pdf_info` first for the page count, then `pdf_read_pages` in ranges (1-3, 4-7, 8-11, … through results/discussion) and/or `pdf_search` for specific sections. Read the WHOLE paper — do NOT stop at pages 1-3, or you will miss results and implications (the bug that produced "Level 1, pages 1-3 only" extractions).
+- **.tex source:** Read directly with the Read tool — often more detail than the compiled PDF
+- **If both exist:** Prefer .tex for content extraction, use pdf-mcp on the PDF for figures/tables
 
 **While reading, collect:**
 1. Full title, all authors, year, journal/venue, DOI (if available)
