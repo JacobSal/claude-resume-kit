@@ -8,17 +8,21 @@ Detailed reference for claude-resume-kit. For the quick overview, see [README.md
 
 ```
 claude-resume-kit/
-├── CLAUDE.md                          # Auto-loaded project instructions
+├── .claude-plugin/plugin.json         # Plugin manifest — declares skills at ./skills (authoritative)
+├── CLAUDE.md                          # @AGENTS.md + standalone-mode state tables
+├── AGENTS.md                          # Cross-agent source of truth (modes, file map, rules)
 ├── config.md                          # Your personal configuration
-├── .claude/skills/                    # 6 skills (invoked as /skill-name)
+├── skills/                            # 7 skills (invoked as /skill-name)
 │   ├── setup-extract/SKILL.md         # Extract from papers → structured data
 │   ├── setup-build-kb/SKILL.md        # Synthesize KB from extractions
 │   ├── make-resume/SKILL.md           # JD → tailored resume/CV (.tex)
-│   ├── make-cl/SKILL.md              # Session → cover letter (.tex)
+│   ├── make-cl/SKILL.md               # Session → cover letter (.tex)
+│   ├── make-research-statement/SKILL.md # Session + KB → academic research statement
 │   ├── edit-resume/SKILL.md           # Edit from critique/feedback
-│   └── critique/SKILL.md             # Independent quality review
+│   └── critique/SKILL.md              # Independent quality review
 ├── resume_builder/
 │   ├── reference/                     # Generation rules and protocols
+│   │   ├── core_rules.md              # CANONICAL hard rules — loaded FIRST by every skill
 │   │   ├── shared_ops.md              # Session workflow (all skills read this)
 │   │   ├── resume_reference.md        # Resume/CV formatting rules
 │   │   ├── cl_reference.md            # Cover letter rules
@@ -44,6 +48,24 @@ claude-resume-kit/
 ├── JDs/                               # Job descriptions (text files)
 └── output/                            # Generated .tex files, session files, critiques
 ```
+
+---
+
+## Standalone vs Plugin Mode
+
+The kit runs in two modes. Which one you are in determines where files resolve and where
+state is tracked. (Full details in [AGENTS.md](AGENTS.md).)
+
+| | **Standalone** (clone-and-run) | **Plugin** (marketplace plugin) |
+|---|---|---|
+| How | `git clone` this repo, run `claude` inside it | Enabled as a plugin in a host project |
+| Root for all paths | the repo root | `RESUME_KIT_ROOT` (e.g. host `_resume_kit_files/`), read from `_resume_kit_files/.schema/root.json` |
+| State file | `CLAUDE.md` (Active Sessions, KB Corrections) | `kit_state.md` under `RESUME_KIT_ROOT` |
+| `CLAUDE.md` auto-loaded? | Yes | No — each `SKILL.md` reads files explicitly via its `## 0. Resume Kit Root` bootstrap |
+| Hard rules | `resume_builder/reference/core_rules.md` (loaded first, both modes) | same file, under `RESUME_KIT_ROOT` |
+
+In plugin mode, every relative path in this document (`config.md`, `resume_builder/…`,
+`knowledge_base/…`, `output/…`, `JDs/…`) resolves under `RESUME_KIT_ROOT`.
 
 ---
 
@@ -162,7 +184,7 @@ Session 3:  /critique                     → critique .md with score
 
 ### Skill Prompts (advanced)
 
-Each skill is a markdown file in `.claude/skills/<name>/SKILL.md`. You can:
+Each skill is a markdown file in `skills/<name>/SKILL.md`. You can:
 - Add STOP points for more user control
 - Change the number of web searches in Phase 0
 - Adjust how many bullets per position

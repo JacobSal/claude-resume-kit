@@ -60,18 +60,27 @@ Each step uses a **separate Claude Code session** for best quality (fresh contex
 
 ---
 
-## Try it first (5 minutes)
+## See it first (no setup)
 
-Want to see what it does before extracting your own papers? The repo includes a complete example knowledge base for a fictional researcher:
+Want to see what it produces before extracting your own papers? The repo ships a complete worked example for a fictional researcher (Dr. Jordan Chen) under `resume_builder/examples/`:
+
+- [`example_resume.pdf`](resume_builder/examples/example_resume.pdf) and [`example_cover_letter.pdf`](resume_builder/examples/example_cover_letter.pdf) — the rendered output
+- [`output/`](resume_builder/examples/output/) — the `.tex` source Claude generated
+- [`example_session_file.md`](resume_builder/examples/example_session_file.md) — the decision log that produced it
+- `example_config.md`, `extractions/`, `experience/`, `bundles/` — the inputs
+
+To run the pipeline yourself against the example, first populate the live knowledge base from the example (the live `resume_builder/experience/` and `bundles/` ship empty), then point `/make-resume` at the included `JDs/example_jd.txt`:
 
 ```bash
-git clone https://github.com/ARPeeketi/claude-resume-kit.git
+git clone https://github.com/JacobSal/claude-resume-kit.git
 cd claude-resume-kit
+# copy the example KB into the live folders the skills read from:
+cp resume_builder/examples/experience/* resume_builder/experience/
+cp resume_builder/examples/bundles/*    resume_builder/bundles/
+cp resume_builder/examples/example_config.md config.md
 claude
 /make-resume JDs/example_jd.txt
 ```
-
-This runs the full pipeline — JD analysis, bullet selection, LaTeX generation — using the included example data. No setup required.
 
 ---
 
@@ -80,9 +89,11 @@ This runs the full pipeline — JD analysis, bullet selection, LaTeX generation 
 ### 1. Clone and configure
 
 ```bash
-git clone https://github.com/ARPeeketi/claude-resume-kit.git
+git clone https://github.com/JacobSal/claude-resume-kit.git
 cd claude-resume-kit
 ```
+
+> This is the plugin-enabled fork. Originally forked from [ARPeeketi/claude-resume-kit](https://github.com/ARPeeketi/claude-resume-kit).
 
 Edit `config.md` with your details (name, email, provenance flags, role types). See `resume_builder/examples/example_config.md` for a complete example.
 
@@ -138,6 +149,7 @@ Job Description --> /make-resume --> Tailored Resume/CV (.tex)            |
 | `/setup-build-kb` | Build KB from extractions | All extractions | `resume_builder/{experience,bundles,support}/` |
 | `/make-resume` | Generate tailored resume or CV | JD path | `output/<Folder>/e2e_*.tex` + session file |
 | `/make-cl` | Generate matching cover letter | Session file | `output/<Folder>/*_cover_letter.tex` |
+| `/make-research-statement` | Generate academic research statement | Session + KB | `output/<Folder>/research_statement_*.tex` |
 | `/edit-resume` | Edit resume/CV/CL from feedback | Session + feedback | Updated `.tex` files |
 | `/critique` | Independent quality review | Session file | `output/<Folder>/critique_*.md` |
 
